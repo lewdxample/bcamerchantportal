@@ -252,27 +252,27 @@ function makecontent(){
     document.getElementById("declinebtn"+tidd).style.display = "none";
   }
 
-  // This registration token comes from the client FCM SDKs.
-var registrationToken = 'eHWbHQcI06w:APA91bF3a9mgXznfnq2q4DAeFBZ6Gtds15iF9Dp2OJDSPhzMYGURvT7TTrLQaCNyZukOnlioAOtT2AltdpTeBY9lZTB2xiJv2thrxANaZcgcXmBHasXEs43dWzhnB_50aLIfSGGDkXIc';
+  // function sendNotif(){
+  //   // This registration token comes from the client FCM SDKs.
+  //   var registrationToken = 'eHWbHQcI06w:APA91bF3a9mgXznfnq2q4DAeFBZ6Gtds15iF9Dp2OJDSPhzMYGURvT7TTrLQaCNyZukOnlioAOtT2AltdpTeBY9lZTB2xiJv2thrxANaZcgcXmBHasXEs43dWzhnB_50aLIfSGGDkXIc';
 
-var message = {
-  data: {
-    score: '850',
-    time: '2:45'
-  },
-  token: registrationToken
-};
-
-// Send a message to the device corresponding to the provided
-// registration token.
-admin.messaging().send(message)
-  .then((response) => {
-    // Response is a message ID string.
-    console.log('Successfully sent message:', response);
-  })
-  .catch((error) => {
-    console.log('Error sending message:', error);
-  });
-
-
+  //   var message = {
+  //     data: {
+  //       score: '850',
+  //       time: '2:45'
+  //     },
+  //     token: registrationToken
+  //   };
+    
+  //   // Send a message to the device corresponding to the provided
+  //   // registration token.
+  //   admin.messaging().send(message)
+  //     .then((response) => {
+  //       // Response is a message ID string.
+  //       console.log('Successfully sent message:', response);
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error sending message:', error);
+  //   });
+  // }
 }
