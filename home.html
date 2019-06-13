@@ -254,8 +254,27 @@
         }
 
         function clickclick(){
-            console.log("ASd");
-            
+            var admin = require('firebase-admin');
+            var registrationToken = 'eHWbHQcI06w:APA91bF3a9mgXznfnq2q4DAeFBZ6Gtds15iF9Dp2OJDSPhzMYGURvT7TTrLQaCNyZukOnlioAOtT2AltdpTeBY9lZTB2xiJv2thrxANaZcgcXmBHasXEs43dWzhnB_50aLIfSGGDkXIc';
+
+            var message = {
+            data: {
+                title: '850',
+                body: '2:45'
+            },
+            token: registrationToken
+            };
+
+            // Send a message to the device corresponding to the provided
+            // registration token.
+            admin.messaging().send(message)
+            .then((response) => {
+                // Response is a message ID string.
+                console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+                console.log('Error sending message:', error);
+            });
         }
     </script>
 </body>
