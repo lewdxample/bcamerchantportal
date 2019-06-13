@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyAbhytct2CqdpYfaIgrux4Cs_JCpqa-bK0",
+        authDomain: "bca-merchant-service-apps.firebaseapp.com",
+        databaseURL: "https://bca-merchant-service-apps.firebaseio.com",
+        projectId: "bca-merchant-service-apps",
+        storageBucket: "bca-merchant-service-apps.appspot.com",
+        messagingSenderId: "200492073600",
+        appId: "1:200492073600:web:1b5e04e77fcf7162"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script src="main.js"></script>
+    <title>myPortal</title>
+</head>
+<body>
+    <div class="header">
+        <a href="#default" class="logo">myPortal</a> 
+        <img src="refresh-512.png" width="50px" height="50px" onclick="reloadtab()" title="Click to reload" style="cursor: pointer">
+        <div class="header-right">
+            <a>Hello, Stranger!</a>
+            <a class="active" href="home.html">Home</a>
+            <a class="active" href="carousel.html">Image Carousel</a>
+            <a class="logout" href="index.html">Logout</a>
+            
+        </div>
+    </div> 
+
+    <div id="lds-facebook"><div></div><div></div><div></div></div>
+
+    <div class="container">
+        
+        <div class="tab" id="tab">
+            <!-- <button class="tablinks" id="defaultOpen" onclick="openUser(event, 'user1')">User 1</button> -->
+            <!-- <button class="tablinks" onclick="openUser(event, 'user2')">User 2</button> -->
+        </div>
+        
+        <div id="tabcontainer">
+            <!-- <div id="user1" class="tabcontent">
+                <div>
+                    template
+                    <div class="tabchild">
+                        <img id="imgpromo1" src="" alt="[imageURLForAds]">
+                    </div>
+                    <div class="tabchild">
+                        <div id="adcontent">
+                            [promotionTitle] <br>
+                            [description] <br>
+                            [product] <br>
+                            [dateStart] [timeStart] <br>
+                            [dateEnd] [timeEnd]
+                        </div>
+                    </div>
+                    <div class="tabchild">
+                        <div>
+                            <button class="contentbtn">Accept</button> <br>
+                            <button class="contentbtn">Decline</button>
+                        </div>
+                    </div>          
+                </div>            
+            </div> -->
+            
+        </div>
+              
+    </div>
+
+    <script>
+        var tabdiv = document.getElementById("tab");
+        var tabcontainter = document.getElementById("tabcontainer");
+        var tabcontent = document.getElementsByClassName("tabcontent");
+        var loading = document.getElementById("lds-facebook");
+        var arrayuser = [];
+        var loadtrue = 1;
+        var mid = [];
+        var statusChecking = [];
+        var tid = [];
+
+        function reloadtab(){
+            tabdiv.innerHTML = "";
+            tabcontainer.innerHTML = "";
+            var ref = firebase.database().ref('transaction_request_promo');
+
+            ref.once('value').then(
+            function(snapshot) {
+                arraymid = [];
+                arraytid = [];
+                snapshot.forEach(function(childSnapshot) {
+                arraymid.push(childSnapshot.key);
+
+                for(var i = 0 ; i < arraymid.length ; i++){
+
+                    var button = document.createElement('button');
+                    var bText = document.createTextNode('User'+arraymid[i]);
+                    var notif = document.createElement('img');
+                    
+                    notif.setAttribute('src', 'notif.png');
+                    notif.setAttribute('width', '20px');
+                    notif.setAttribute('height', '20px');
+                    notif.setAttribute('style', 'float: right; box-shadow: 2px 2px 2px grey; border-radius: 50%')
+
+                    button.setAttribute('class', 'tablinks');
+                    button.setAttribute("onclick", "openUser(event, 'user"+arraymid[i]+"')");
+        
+                }
+
+                button.appendChild(bText);
+                button.appendChild(notif);
+                tabdiv.appendChild(button);
+                })
+
+                arraytid.forEach(function(value){
+                    Object.keys(value).forEach(function(key){
+                        // console.log("key: " + key + " value: " + value[key]);
+                        if(key == "MID"){
+                        mid.push(value[key]);          
+                        }
+
+                        if(key == "statusChecking"){
+                        statusChecking.push(value[key]);
+                        }
+
+                        if(key == "TID"){
+                        tid.push(value[key]);
+                        
+                        }
+                    })
+                })
+            } 
+            )
+            console.log("refreshed");
+
+            for(var i = 0 ; i < arraytid.length ; i++){
+                var tabcon = document.createElement('div');
+                var div = document.createElement('div');
+                var div2 = document.createElement('div');
+                var tabchild1 = document.createElement('div');
+                var tabchild2 = document.createElement('div');
+                var tabchild3 = document.createElement('div');
+                var imgpromo = document.createElement('img');
+                var adcontent = document.createElement('div');
+                var accbtn = document.createElement('button');
+                var declinebtn = document.createElement('button');
+
+                var accText = document.createTextNode('Accept');
+                var declineText = document.createTextNode('Decline');
+                var statusText = document.createElement('div');
+                var status = document.createElement('div');
+
+                status.setAttribute('id', 'status'+tid[i]);
+                statusText.setAttribute('style', 'font-size: 26px');
+                statusText.innerHTML = "<b>Status : </b><br>";
+
+                if(statusChecking[i] == "accepted"){
+                    status.setAttribute('style', 'font-size: 36px; margin-top: 10px; color: lightgreen');
+                    status.innerHTML = "<b>Diterima</b><br>";
+                    accbtn.setAttribute('style', 'display: none');
+                    declinebtn.setAttribute('style', 'display: none');
+                }else if(statusChecking[i] == "not-accepted"){
+                    status.setAttribute('style', 'font-size: 36px; margin-top: 10px; color: red');
+                    status.innerHTML = "<b>Ditolak</b><br>";
+                    accbtn.setAttribute('style', 'display: none');
+                    declinebtn.setAttribute('style', 'display: none');
+                }else{
+                    status.setAttribute('style', 'font-size: 36px; margin-top: 10px');
+                    status.innerHTML = "<b>Waiting</b><br>";
+                }
+            
+                tabchild1.setAttribute('class', 'tabchild');
+                tabchild2.setAttribute('class', 'tabchild');
+                tabchild3.setAttribute('class', 'tabchild');
+                imgpromo.setAttribute('id', 'imgpromo'+mid[i]);
+                imgpromo.setAttribute('alt', '[imageURLForAds]');
+                imgpromo.setAttribute('src', imageURLForAdss[i]);
+                imgpromo.setAttribute('style', 'width: 100%')
+
+                div2.setAttribute('style', 'text-align: center;')
+                tabchild1.appendChild(imgpromo);
+                adcontent.setAttribute('id', 'adcontent');
+                // adcontent.appendChild(adText);
+                tabchild2.appendChild(adcontent);
+
+                accbtn.setAttribute('id', 'accbtn');
+                declinebtn.setAttribute('id', 'declinebtn');
+                accbtn.setAttribute('class', 'contentbtn');
+                accbtn.setAttribute('onclick', 'acceptAds('+mid[i]+', '+tid[i]+')');
+                declinebtn.setAttribute('onclick', 'declineAds('+mid[i]+', "'+tid[i]+'")');
+                
+                accbtn.appendChild(accText);
+                div2.appendChild(statusText);
+                div2.appendChild(status);
+                div2.appendChild(accbtn);
+                declinebtn.setAttribute('class', 'contentbtn');
+                declinebtn.appendChild(declineText);
+                div2.appendChild(declinebtn);
+                tabchild3.appendChild(div2);
+                div.appendChild(tabchild1);
+                div.appendChild(tabchild2);
+                div.appendChild(tabchild3);
+                adcontent.innerHTML = '<b>Title :</b><br> ' +titleForAdss[i]+ '<br><b>Description :</b><br> ' +descriptionForAdss[i]+ '<br><b>Address :</b><br> ' +address[i]+ '<br><b>Email Address :</b><br> ' +email[i]+ '<br><b>Mobile Phone Number :</b><br> ' +mobilephone[i]+ '<br><b>Office Phone Number :</b><br> ' +phone[i]+ '<br><b>Date Start :</b><br> ' +dateStartAdss[i]+ '<br><b>Date End :</b><br> ' +dateEndAdss[i]+ '<br><b>Time Start :</b><br> ' +timeStartAdss[i]+ '<br><b>Time End :</b><br> ' +timeEndAdss[i]
+
+                tabcon.setAttribute('id', 'user'+mid[i]);  
+                tabcon.setAttribute('class', 'tabcontent user'+mid[i]);
+                tabcon.appendChild(div);
+                tabcontainer.append(tabcon);
+
+            }
+            if(tabcontent.length > 0){
+                loading.style.display = "none";
+            }
+            
+        }
+
+        function acceptAds(midd, tidd){
+            firebaseRef = firebase.database().ref();
+            firebaseRef.child('transaction_request_promo/'+midd+'/'+tidd)
+            .update({
+                statusChecking:'accepted'
+            });
+            var stts = document.getElementById('status'+tidd);
+            console.log("status"+tidd);
+            
+            stts.innerHTML = "<b>Diterima</b><br>";
+            stts.style.cssText = "color: lightgreen; font-size: 36px; margin-top: 10px";
+        
+            document.getElementById("accbtn"+tidd).style.display = "none";
+            document.getElementById("declinebtn"+tidd).style.display = "none";
+        }
+
+        function declineAds(midd, tidd){
+            firebaseRef = firebase.database().ref();
+            firebaseRef.child('transaction_request_promo/'+midd+'/'+tidd)
+            .update({
+                statusChecking:'not-accepted'
+            });
+            var stts = document.getElementById('status'+tidd);
+            console.log("status"+tidd);
+            
+            stts.innerHTML = "<b>Ditolak</b><br>";
+            stts.style.cssText = "color: red; font-size: 36px; margin-top: 10px";
+
+            document.getElementById("accbtn"+tidd).style.display = "none";
+            document.getElementById("declinebtn"+tidd).style.display = "none";
+        }
+    </script>
+</body>
+</html>

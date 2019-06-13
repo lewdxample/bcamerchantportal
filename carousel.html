@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyAbhytct2CqdpYfaIgrux4Cs_JCpqa-bK0",
+        authDomain: "bca-merchant-service-apps.firebaseapp.com",
+        databaseURL: "https://bca-merchant-service-apps.firebaseio.com",
+        projectId: "bca-merchant-service-apps",
+        storageBucket: "bca-merchant-service-apps.appspot.com",
+        messagingSenderId: "200492073600",
+        appId: "1:200492073600:web:1b5e04e77fcf7162"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script src="carousel.js"></script>
+    <title>myPortal</title>
+</head>
+<body>
+    <div class="header">
+        <a href="#default" class="logo">myPortal</a> 
+        <!-- <img src="refresh-512.png" width="50px" height="50px" onclick="reloadtab()" title="Click to reload" style="cursor: pointer"> -->
+        <div class="header-right">
+            <a>Hello, Stranger!</a>
+            <a class="active" href="home.html">Home</a>
+            <a class="active" href="carousel.html">Image Carousel</a>
+            <a class="logout" href="index.html">Logout</a>
+            
+        </div>
+    </div> 
+
+    <div class="container">
+        
+        <div id="tabcontainer_carousel">
+                <div class="card">
+                        <img id="imgr0" class="imgprev" src="https://firebasestorage.googleapis.com/v0/b/bca-merchant-service-apps.appspot.com/o/no-img.png?alt=media&token=398ae4ad-44ef-4a45-9b76-97e6e3fa2f26" alt="Avatar" style="width:100%" height="220px">
+                    <div class="cardcontainer">
+                            <div style="height:0px;overflow:hidden">
+                                <input type="file" id="fileInput0" name="fileInput" accept="image/*"/>
+                            </div>
+                        <button id="submitbtn1" class="submitbtn" title="Save Changes" onclick="uploadImg(0)" ><img class="iconbtn" src="check.png" alt="Accept" width="35px" height="35px"></button>
+                        <button id="filebtn1" title="Change Image"><img class="iconbtn" src="replace.png" onclick="chooseFile(0)" alt="" width="35px" height="35px"></button>
+                        <button title="Remove Image"><img class="iconbtn" src="filled-trash.png" onclick="removeImg('1')" alt="" width="35px" height="35px"></button>
+                    </div>
+                </div>
+
+                <div class="card">
+                        <img id="imgr1" class="imgprev" src="https://firebasestorage.googleapis.com/v0/b/bca-merchant-service-apps.appspot.com/o/no-img.png?alt=media&token=398ae4ad-44ef-4a45-9b76-97e6e3fa2f26" alt="Avatar" style="width:100%" height="220px">
+                        <div class="cardcontainer">
+                                <div style="height:0px;overflow:hidden">
+                                    <input type="file" id="fileInput1" name="fileInput" accept="image/*"/>
+                                </div>
+                            <button id="submitbtn2" class="submitbtn" title="Save Changes" onclick="uploadImg(1)"><img class="iconbtn" src="check.png" alt="" width="35px" height="35px"></button>
+                            <button id="filebtn2" title="Change Image"><img class="iconbtn" src="replace.png" onclick="chooseFile(1)" alt="" width="35px" height="35px"></button>
+                            <button title="Remove Image"><img class="iconbtn" src="filled-trash.png" onclick="removeImg('2')" alt="" width="35px" height="35px"></button>
+                        </div>
+                </div>
+
+                <div class="card">
+                        <img id="imgr2" class="imgprev" src="https://firebasestorage.googleapis.com/v0/b/bca-merchant-service-apps.appspot.com/o/no-img.png?alt=media&token=398ae4ad-44ef-4a45-9b76-97e6e3fa2f26" alt="Avatar" style="width:100%" height="220px">
+                        <div class="cardcontainer">
+                                <div style="height:0px;overflow:hidden">
+                                    <input type="file" id="fileInput2" name="fileInput" accept="image/*"/>
+                                </div>
+                            <button id="submitbtn3" class="submitbtn" title="Save Changes" onclick="uploadImg(2)"><img class="iconbtn" src="check.png" alt="" width="35px" height="35px"></button>
+                            <button id="filebtn3" title="Change Image"><img class="iconbtn" src="replace.png" onclick="chooseFile(2)" alt="" width="35px" height="35px"></button>
+                            <button title="Remove Image"><img class="iconbtn" src="filled-trash.png" onclick="removeImg('3')" alt="" width="35px" height="35px"></button>
+                        </div>
+                </div>
+
+                <div class="card">
+                        <img id="imgr3" class="imgprev" src="https://firebasestorage.googleapis.com/v0/b/bca-merchant-service-apps.appspot.com/o/no-img.png?alt=media&token=398ae4ad-44ef-4a45-9b76-97e6e3fa2f26" alt="Avatar" style="width:100%" height="220px">
+                        <div class="cardcontainer">
+                                <div style="height:0px;overflow:hidden">
+                                    <input type="file" id="fileInput3" name="fileInput" accept="image/*"/>
+                                </div>
+                            <button id="submitbtn4" class="submitbtn" title="Save Changes" onclick="uploadImg(3)"><img class="iconbtn" src="check.png" alt="" width="35px" height="35px"></button>
+                            <button id="filebtn4" title="Change Image"><img class="iconbtn" src="replace.png" onclick="chooseFile(3)" alt="" width="35px" height="35px"></button>
+                            <button title="Remove Image"><img class="iconbtn" src="filled-trash.png" onclick="removeImg('4')" alt="" width="35px" height="35px"></button>
+                        </div>
+                </div>
+
+                <div class="card">
+                        <img id="imgr4" class="imgprev" src="https://firebasestorage.googleapis.com/v0/b/bca-merchant-service-apps.appspot.com/o/no-img.png?alt=media&token=398ae4ad-44ef-4a45-9b76-97e6e3fa2f26" alt="Avatar" style="width:100%" height="220px">
+                        <div class="cardcontainer">
+                                <div style="height:0px;overflow:hidden">
+                                    <input type="file" id="fileInput4" name="fileInput" accept="image/*"/>
+                                </div>
+                            <button id="submitbtn5" class="submitbtn" title="Save Changes" onclick="uploadImg(4)"><img class="iconbtn" src="check.png" alt="" width="35px" height="35px"></button>                            
+                            <button id="filebtn5" title="Change Image"><img class="iconbtn" src="replace.png" onclick="chooseFile(4)" alt="" width="35px" height="35px"></button>
+                            <button title="Remove Image"><img class="iconbtn" src="filled-trash.png" onclick="removeImg('5')" alt="" width="35px" height="35px"></button>
+                        </div>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        var carousel = document.getElementById("tabcontainer_carousel");
+
+        function chooseFile(id) {
+            $("#fileInput"+id).click();
+        }
+    </script>
+</body>
+</html>
